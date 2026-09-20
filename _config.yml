@@ -7,11 +7,11 @@ first_name: "Interactive"
 middle_name:
 last_name: "Robots"
 contact_note: >
-  Course website for CS 6501 / CS 4501: Learning for Interactive Robots at the University of Virginia (Fall 2026).
+  Course website for CS 6501: Learning for Interactive Robots at the University of Virginia (Fall 2026).
 description: >
   Course website and student lecture reports for UVA Learning for Interactive Robots (Fall 2026).
 footer_text: >
-  University of Virginia &middot; Department of Computer Science &middot; LIVE Lab &middot; Fall 2026.
+  University of Virginia &middot; Fall 2026.
   Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
 keywords: robotics, interactive-robots, machine-learning, reinforcement-learning, foundation-models, human-robot-interaction, uva
 lang: en

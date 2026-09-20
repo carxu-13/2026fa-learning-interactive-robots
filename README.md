@@ -3,7 +3,7 @@
 [![Deploy site](https://github.com/live-robotics-uva/2026fa-learning-interactive-robots/actions/workflows/deploy.yaml/badge.svg)](https://github.com/live-robotics-uva/2026fa-learning-interactive-robots/actions/workflows/deploy.yaml)
 [![filter-files](https://github.com/live-robotics-uva/2026fa-learning-interactive-robots/actions/workflows/filter-files.yml/badge.svg)](https://github.com/live-robotics-uva/2026fa-learning-interactive-robots/actions/workflows/filter-files.yml)
 
-Course website and student lecture reports repository for **CS 6501 / CS 4501: Learning for Interactive Robots** at the **University of Virginia (Fall 2026)**.
+Course website and student lecture reports repository for **CS 6501: Learning for Interactive Robots** at the **University of Virginia (Fall 2026)**.
 
 🌐 **Live Website**: [https://live-robotics-uva.github.io/2026fa-learning-interactive-robots](https://live-robotics-uva.github.io/2026fa-learning-interactive-robots)
 
@@ -141,4 +141,4 @@ Open [http://localhost:4000/2026fa-learning-interactive-robots/](http://localhos
 ## Instructor & Course Staff
 
 - **Instructor**: Prof. Yen-Ling Kuo (LIVE Lab, Department of Computer Science, University of Virginia)
-- **Course**: CS 6501 / CS 4501: Learning for Interactive Robots (Fall 2026)
+- **Course**: CS 6501: Learning for Interactive Robots (Fall 2026)

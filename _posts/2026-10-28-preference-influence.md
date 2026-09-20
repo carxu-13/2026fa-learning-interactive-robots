@@ -24,7 +24,7 @@ toc:
 
 ## Introduction & Motivation
 
-This lecture report synthesizes the core concepts, assigned readings, and classroom discussions for the **Preference, Influence** session in *Learning for Interactive Robots (CS 6501 / CS 4501, Fall 2026)* at the University of Virginia.
+This lecture report synthesizes the core concepts, assigned readings, and classroom discussions for the **Preference, Influence** session in *Learning for Interactive Robots (CS 6501, Fall 2026)* at the University of Virginia.
 
 > **Key takeaway**: Learning human reward functions and preferences from pairwise comparisons, rankings, and active information gathering.
 

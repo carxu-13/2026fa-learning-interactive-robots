@@ -24,7 +24,7 @@ toc:
 
 ## Introduction & Motivation
 
-This lecture report synthesizes the core concepts, assigned readings, and classroom discussions for the **Foundation Models for Action** session in *Learning for Interactive Robots (CS 6501 / CS 4501, Fall 2026)* at the University of Virginia.
+This lecture report synthesizes the core concepts, assigned readings, and classroom discussions for the **Foundation Models for Action** session in *Learning for Interactive Robots (CS 6501, Fall 2026)* at the University of Virginia.
 
 > **Key takeaway**: Vision-Language-Action (VLA) models (RT-1, RT-2, OpenVLA) trained on internet-scale multimodal data and cross-embodiment robot demonstrations.
 

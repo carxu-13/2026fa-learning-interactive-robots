@@ -24,7 +24,7 @@ toc:
 
 ## Introduction & Motivation
 
-This lecture report synthesizes the core concepts, assigned readings, and classroom discussions for the **Continual Learning, Multi-task Learning** session in *Learning for Interactive Robots (CS 6501 / CS 4501, Fall 2026)* at the University of Virginia.
+This lecture report synthesizes the core concepts, assigned readings, and classroom discussions for the **Continual Learning, Multi-task Learning** session in *Learning for Interactive Robots (CS 6501, Fall 2026)* at the University of Virginia.
 
 > **Key takeaway**: Lifelong robot learning, preventing catastrophic forgetting, and positive transfer across diverse robotic manipulation tasks.
 
