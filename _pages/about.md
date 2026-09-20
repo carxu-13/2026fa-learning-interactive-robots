@@ -1,7 +1,7 @@
 ---
 layout: page
 title: about
-permalink: https://yenlingkuo.com/courses/uva-interactive-robot-2026.html
+permalink: /about/
 nav: true
 nav_order: 3
 redirect_to: https://yenlingkuo.com/courses/uva-interactive-robot-2026.html
