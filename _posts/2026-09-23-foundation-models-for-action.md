@@ -9,8 +9,6 @@ htmlwidgets: true
 # Scribe team authors
 authors:
   - name: "Scribe Team (Student Names)"
-    affiliations:
-      name: "University of Virginia"
 
 bibliography: 2026-09-23-foundation-models-for-action.bib
 

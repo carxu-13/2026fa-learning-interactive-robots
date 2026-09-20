@@ -9,8 +9,6 @@ htmlwidgets: true
 # Scribe team authors
 authors:
   - name: "Scribe Team (Student Names)"
-    affiliations:
-      name: "University of Virginia"
 
 bibliography: 2026-10-19-non-verbal-interaction-and-learning-signals.bib
 

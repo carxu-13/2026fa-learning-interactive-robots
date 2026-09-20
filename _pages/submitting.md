@@ -4,7 +4,7 @@ title: submitting
 permalink: /submitting/
 description: Student submission guidelines and pull request workflow for lecture reports.
 nav: true
-nav_order: 3
+nav_order: 2
 ---
 
 ### Course Report Submission Workflow
@@ -69,11 +69,7 @@ htmlwidgets: true
 
 authors:
   - name: "Alice Smith"
-    affiliations:
-      name: "University of Virginia"
   - name: "Bob Jones"
-    affiliations:
-      name: "University of Virginia"
 
 bibliography: 2026-09-16-foundation-models-for-vision.bib
 

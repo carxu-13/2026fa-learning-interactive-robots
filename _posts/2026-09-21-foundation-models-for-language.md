@@ -9,8 +9,6 @@ htmlwidgets: true
 # Scribe team authors
 authors:
   - name: "Scribe Team (Student Names)"
-    affiliations:
-      name: "University of Virginia"
 
 bibliography: 2026-09-21-foundation-models-for-language.bib
 

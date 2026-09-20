@@ -57,7 +57,8 @@ def base_layout(page_title, content, baseurl, active_page = '')
       <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       <style>
         body { padding-top: 70px; padding-bottom: 70px; }
-        .navbar-brand { font-weight: 600; letter-spacing: -0.5px; }
+        .navbar-brand { font-weight: normal; color: #000; letter-spacing: -0.5px; }
+        html[data-theme='dark'] .navbar-brand { color: #fff !important; }
         .table th { background-color: #f8f9fa; font-weight: 600; }
         html[data-theme='dark'] .table th { background-color: #2c3237; color: #fff; }
         html[data-theme='dark'] .table td { color: #e8e8e8; }
@@ -70,7 +71,7 @@ def base_layout(page_title, content, baseurl, active_page = '')
       <header>
         <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top bg-white border-bottom shadow-sm">
           <div class="container">
-            <a class="navbar-brand text-primary font-weight-bold" href="#{baseurl}/">
+            <a class="navbar-brand text-dark font-weight-normal" href="#{baseurl}/">
               🤖 Learning for Interactive Robots
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
@@ -80,9 +81,6 @@ def base_layout(page_title, content, baseurl, active_page = '')
               <ul class="navbar-nav ml-auto flex-nowrap align-items-center">
                 <li class="nav-item #{active_page == 'schedule' ? 'active' : ''}">
                   <a class="nav-link font-weight-medium" href="#{baseurl}/">schedule</a>
-                </li>
-                <li class="nav-item #{active_page == 'reports' ? 'active' : ''}">
-                  <a class="nav-link font-weight-medium" href="#{baseurl}/blog/">reports</a>
                 </li>
                 <li class="nav-item #{active_page == 'submitting' ? 'active' : ''}">
                   <a class="nav-link font-weight-medium" href="#{baseurl}/submitting/">submitting</a>
@@ -122,21 +120,15 @@ end
 rows_html = schedule.map do |s|
   if s['has_report']
     badge_report = %(<a href="#{baseurl}#{s['report_url']}" class="btn btn-sm btn-outline-primary report-btn px-3 py-1">Read Report &rarr;</a>)
-    topic_cell = %(<strong>#{s['topic']}</strong>)
   else
-    badge_label = s['topic'].include?('Tutorial') ? 'Tutorial' : 'No Class'
-    badge_class = s['topic'].include?('Tutorial') ? 'badge-tutorial' : 'badge-noclass'
-    badge_report = %(<span class="text-muted font-italic">&mdash;</span>)
-    topic_cell = %(<span class="text-secondary">#{s['topic']}</span> <span class="badge #{badge_class} ml-1">#{badge_label}</span>)
+    badge_report = %(<span class="text-muted">&mdash;</span>)
   end
 
-  row_class = s['has_report'] ? '' : 'class="table-light text-muted"'
-
   <<~TR
-    <tr #{row_class}>
+    <tr>
       <td class="font-weight-bold">#{s['week']}</td>
       <td>#{s['date']}</td>
-      <td>#{topic_cell}</td>
+      <td><strong>#{s['topic']}</strong></td>
       <td class="text-center">#{badge_report}</td>
     </tr>
   TR
@@ -147,27 +139,24 @@ index_content = <<~HTML
     <header class="post-header mb-4">
       <h1 class="post-title font-weight-bold display-5">Learning for Interactive Robots</h1>
       <p class="post-description lead text-muted">
-        <strong>CS 6501 &middot; Fall 2026</strong> &middot; University of Virginia
+        <strong>CS 6501 &middot; Fall 2026 &middot; University of Virginia</strong>
       </p>
     </header>
 
     <div class="card mb-4 border-light shadow-sm">
       <div class="card-body">
-        <h5 class="card-title font-weight-bold">About the Course Reports Track</h5>
+        <h5 class="card-title font-weight-bold">About Lecture Reports</h5>
         <p class="card-text text-secondary mb-2">
           Welcome to the course website for <strong>Learning for Interactive Robots</strong> at UVA. Following the model of the <a href="https://iclr-blogposts.github.io/2026/about/" target="_blank">ICLR Blogposts Track</a>, student teams synthesize key concepts, foundational literature, and classroom discussions for each lecture in an interactive, Distill-style blog report.
         </p>
         <p class="card-text text-secondary mb-0">
-          Each team submits their lecture report through a <strong>Pull Request</strong> to the course GitHub repository. Once reviewed and merged, the report is published directly to this site.
+          Each team submits their lecture report through a <strong>Pull Request</strong> to the course GitHub repository following the <a href="#{baseurl}/submitting/">submission guide</a>. Once reviewed and merged, the report is published directly to this site.
         </p>
       </div>
     </div>
 
     <section class="mt-4">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <h3 class="font-weight-bold mb-0">Course Schedule & Lecture Reports</h3>
-        <span class="text-muted small">Fall 2026 (Weeks 4&ndash;14)</span>
-      </div>
+      <h3 class="font-weight-bold mb-3">Lecture Reports</h3>
 
       <div class="table-responsive">
         <table class="table table-hover table-bordered align-middle">
@@ -184,17 +173,6 @@ index_content = <<~HTML
           </tbody>
         </table>
       </div>
-    </section>
-
-    <section class="mt-4 p-4 rounded bg-light border">
-      <h5 class="font-weight-bold mb-2">How to Contribute Your Report</h5>
-      <ol class="mb-0 pl-3 text-secondary">
-        <li>Fork the repository: <a href="https://github.com/live-robotics-uva/2026fa-learning-interactive-robots" target="_blank"><code>live-robotics-uva/2026fa-learning-interactive-robots</code></a>.</li>
-        <li>Edit your assigned report template file under <code>_posts/YYYY-MM-DD-[topic-slug].md</code>.</li>
-        <li>Add figures to <code>assets/img/YYYY-MM-DD-[topic-slug]/</code> and references to <code>assets/bibliography/YYYY-MM-DD-[topic-slug].bib</code>.</li>
-        <li>Open a Pull Request with title matching your slug: <code>YYYY-MM-DD-[topic-slug]</code>. Automated checks will verify your files.</li>
-        <li>See full details in the <a href="#{baseurl}/submitting/">Submission Guide</a>.</li>
-      </ol>
     </section>
   </div>
 HTML
@@ -293,7 +271,7 @@ File.write("#{site_dir}/about/index.html", about_redirect)
 FileUtils.mkdir_p("#{site_dir}/blog")
 report_cards = schedule.select { |s| s['has_report'] }.map do |s|
   post_file = "_posts/#{s['slug']}.md"
-  desc = "Lecture report on #{s['topic']} for UVA Learning for Interactive Robots (Fall 2026)."
+  desc = s['topic']
   if File.exist?(post_file)
     text = File.read(post_file)
     if text =~ /description:\s*["']?([^"'\n]+)/
@@ -313,7 +291,7 @@ report_cards = schedule.select { |s| s['has_report'] }.map do |s|
         </h4>
         <p class="card-text text-secondary mb-3">#{desc}</p>
         <div class="d-flex justify-content-between align-items-center">
-          <span class="small text-muted"><i class="fa-solid fa-users mr-1"></i> Scribe Team &middot; UVA</span>
+          <span class="small text-muted"><i class="fa-solid fa-users mr-1"></i> Scribe Team</span>
           <a href="#{baseurl}#{s['report_url']}" class="btn btn-sm btn-outline-primary px-3">Read Report &rarr;</a>
         </div>
       </div>
@@ -353,12 +331,8 @@ schedule.select { |s| s['has_report'] }.each do |s|
           <span class="badge badge-light border text-secondary ml-1">#{s['date']}</span>
         </div>
         <h1 class="post-title font-weight-bold display-5">#{s['topic']}</h1>
-        <p class="lead text-secondary mt-2">
-          Lecture report on #{s['topic']} for <em>Learning for Interactive Robots (CS 6501, Fall 2026)</em>.
-        </p>
         <div class="d-flex align-items-center text-muted small mt-3">
-          <div class="mr-3"><i class="fa-solid fa-user-group mr-1"></i> <strong>Authors:</strong> Scribe Team (Student Names)</div>
-          <div><i class="fa-solid fa-building-columns mr-1"></i> University of Virginia</div>
+          <div><i class="fa-solid fa-user-group mr-1"></i> <strong>Authors:</strong> Scribe Team (Student Names)</div>
         </div>
       </header>
 

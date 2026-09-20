@@ -9,8 +9,6 @@ htmlwidgets: true
 # Scribe team authors
 authors:
   - name: "Scribe Team (Student Names)"
-    affiliations:
-      name: "University of Virginia"
 
 bibliography: 2026-10-26-intent-trajectory-prediction.bib
 
