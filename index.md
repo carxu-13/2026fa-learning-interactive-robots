@@ -17,10 +17,10 @@ nav_order: 1
   <div class="card mb-4 border-light shadow-sm">
     <div class="card-body">
       <h5 class="card-title font-weight-bold">About Lecture Reports</h5>
-      <p class="card-text text-secondary mb-2">
+      <p class="card-text mb-2">
         Welcome to the course lecture report website for <strong>Learning for Interactive Robots</strong> at UVA. Following the model of the <a href="https://iclr-blogposts.github.io/2026/about/" target="_blank">ICLR Blogposts Track</a>, student teams synthesize and critique key concepts, foundational papers, and discussion insights for each lecture in a rich, interactive Distill-style blog report.
       </p>
-      <p class="card-text text-secondary mb-0">
+      <p class="card-text mb-0">
         Each team submits their lecture report through a <strong>Pull Request</strong> to the course GitHub repository following the <a href="{{ '/submitting/' | relative_url }}">submission guide</a>. Once reviewed and merged, the report is published directly to this site.
       </p>
     </div>

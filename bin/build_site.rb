@@ -32,6 +32,7 @@ def base_layout(page_title, content, baseurl, active_page = '')
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" crossorigin="anonymous">
       <link rel="stylesheet" href="#{baseurl}/assets/css/academicons.min.css">
       <link rel="stylesheet" href="#{baseurl}/assets/css/scholar-icons.css">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&display=swap">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
       <link rel="stylesheet" href="#{baseurl}/assets/css/main.css">
       <script>
@@ -113,6 +114,67 @@ def base_layout(page_title, content, baseurl, active_page = '')
           font-weight: 700 !important;
         }
 
+        /* Card & Table Typography - Roboto font family, solid black, restored cell padding */
+        body, .card, .card-body, .card-body p, .card-text,
+        table, table.table, table td, table th {
+          font-family: "Roboto", sans-serif !important;
+          color: #000 !important;
+        }
+        .card-body p, .card-text {
+          font-weight: 300 !important;
+          line-height: 1.6;
+        }
+        .table td, .table th {
+          padding: .75rem !important;
+          vertical-align: middle !important;
+        }
+        .table td {
+          font-weight: 300 !important;
+        }
+        .table th {
+          background-color: #f8f9fa;
+          font-weight: 600 !important;
+        }
+        .card .card-title, .card-title {
+          color: #000 !important;
+          font-weight: 700 !important;
+        }
+
+        /* Footer styling - clean white background with border */
+        footer.footer, footer.fixed-bottom {
+          background-color: #fff !important;
+          border-top: 1px solid #dee2e6 !important;
+          color: #000 !important;
+        }
+        footer.footer .container, footer.fixed-bottom .container {
+          color: #000 !important;
+        }
+
+        html[data-theme='dark'] .card,
+        html[data-theme='dark'] .card-body,
+        html[data-theme='dark'] .card-body p,
+        html[data-theme='dark'] .card-text,
+        html[data-theme='dark'] table,
+        html[data-theme='dark'] table.table,
+        html[data-theme='dark'] table td,
+        html[data-theme='dark'] table th {
+          color: #e8e8e8 !important;
+        }
+        html[data-theme='dark'] .card .card-title,
+        html[data-theme='dark'] .card-title {
+          color: #fff !important;
+        }
+        html[data-theme='dark'] footer.footer,
+        html[data-theme='dark'] footer.fixed-bottom {
+          background-color: #1c1c1d !important;
+          border-top: 1px solid #424246 !important;
+          color: #e8e8e8 !important;
+        }
+        html[data-theme='dark'] footer.footer .container,
+        html[data-theme='dark'] footer.fixed-bottom .container {
+          color: #e8e8e8 !important;
+        }
+
         .table th { background-color: #f8f9fa; font-weight: 600; }
         html[data-theme='dark'] .table th { background-color: #2c3237; color: #fff; }
         html[data-theme='dark'] .table td { color: #e8e8e8; }
@@ -158,7 +220,7 @@ def base_layout(page_title, content, baseurl, active_page = '')
       </div>
 
       <footer class="footer fixed-bottom py-3 bg-white border-top">
-        <div class="container text-center small text-muted">
+        <div class="container text-center small text-dark">
           &copy; 2026 Learning for Interactive Robots &middot; University of Virginia
         </div>
       </footer>
@@ -200,10 +262,10 @@ index_content = <<~HTML
     <div class="card mb-4 border-light shadow-sm">
       <div class="card-body">
         <h5 class="card-title font-weight-bold">About Lecture Reports</h5>
-        <p class="card-text text-secondary mb-2">
+        <p class="card-text mb-2">
           Welcome to the course lecture report website for <strong>Learning for Interactive Robots</strong> at UVA. Following the model of the <a href="https://iclr-blogposts.github.io/2026/about/" target="_blank">ICLR Blogposts Track</a>, student teams synthesize key concepts, foundational literature, and classroom discussions for each lecture in an interactive, Distill-style blog report.
         </p>
-        <p class="card-text text-secondary mb-0">
+        <p class="card-text mb-0">
           Each team submits their lecture report through a <strong>Pull Request</strong> to the course GitHub repository following the <a href="#{baseurl}/submitting/">submission guide</a>. Once reviewed and merged, the report is published directly to this site.
         </p>
       </div>
