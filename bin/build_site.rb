@@ -57,8 +57,62 @@ def base_layout(page_title, content, baseurl, active_page = '')
       <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       <style>
         body { padding-top: 70px; padding-bottom: 70px; }
-        .navbar-brand { font-weight: normal; color: #000; letter-spacing: -0.5px; }
-        html[data-theme='dark'] .navbar-brand { color: #fff !important; }
+        .navbar-brand, .navbar-brand:visited { font-weight: normal; color: #000 !important; letter-spacing: -0.5px; text-decoration: none; }
+        html[data-theme='dark'] .navbar-brand, html[data-theme='dark'] .navbar-brand:visited { color: #fff !important; }
+        .navbar-nav .nav-link, .navbar-nav .nav-link:visited { color: rgba(0, 0, 0, 0.65) !important; text-decoration: none; }
+        .navbar-nav .nav-link:hover { color: #007bff !important; }
+        .navbar-nav .nav-item.active > .nav-link, .navbar-nav .nav-item.active > .nav-link:visited { color: #007bff !important; }
+        html[data-theme='dark'] .navbar-nav .nav-link, html[data-theme='dark'] .navbar-nav .nav-link:visited { color: rgba(255, 255, 255, 0.7) !important; }
+
+        /* General Links & Visited Links */
+        a, a:visited { color: #007bff; text-decoration: none; }
+        a:hover { color: #0056b3; text-decoration: underline; }
+
+        /* Outline Buttons */
+        .btn-outline-primary, .btn-outline-primary:visited {
+          color: #007bff !important;
+          border-color: #007bff !important;
+          background-color: transparent !important;
+        }
+        .btn-outline-primary:hover, .btn-outline-primary:active {
+          color: #fff !important;
+          background-color: #007bff !important;
+          border-color: #007bff !important;
+        }
+
+        /* Secondary Text & TOC Links in black */
+        .text-secondary, a.text-secondary, a.text-secondary:visited,
+        .text-dark, a.text-dark, a.text-dark:visited,
+        .nav-link.text-secondary, .nav-link.text-secondary:visited,
+        .nav-link.text-dark, .nav-link.text-dark:visited,
+        .card-text.text-secondary {
+          color: #000 !important;
+        }
+        a.text-secondary:hover, a.text-dark:hover,
+        .nav-link.text-secondary:hover, .nav-link.text-dark:hover {
+          color: #007bff !important;
+          text-decoration: underline;
+        }
+
+        html[data-theme='dark'] .text-secondary,
+        html[data-theme='dark'] a.text-secondary,
+        html[data-theme='dark'] a.text-secondary:visited,
+        html[data-theme='dark'] .text-dark,
+        html[data-theme='dark'] a.text-dark,
+        html[data-theme='dark'] a.text-dark:visited,
+        html[data-theme='dark'] .nav-link.text-secondary,
+        html[data-theme='dark'] .nav-link.text-secondary:visited,
+        html[data-theme='dark'] .nav-link.text-dark,
+        html[data-theme='dark'] .nav-link.text-dark:visited,
+        html[data-theme='dark'] .card-text.text-secondary {
+          color: #e8e8e8 !important;
+        }
+
+        /* Bold styling for strong and b tags */
+        strong, b, .font-weight-bold {
+          font-weight: 700 !important;
+        }
+
         .table th { background-color: #f8f9fa; font-weight: 600; }
         html[data-theme='dark'] .table th { background-color: #2c3237; color: #fff; }
         html[data-theme='dark'] .table td { color: #e8e8e8; }
@@ -126,9 +180,9 @@ rows_html = schedule.map do |s|
 
   <<~TR
     <tr>
-      <td class="font-weight-bold">#{s['week']}</td>
+      <td>#{s['week']}</td>
       <td>#{s['date']}</td>
-      <td><strong>#{s['topic']}</strong></td>
+      <td>#{s['topic']}</td>
       <td class="text-center">#{badge_report}</td>
     </tr>
   TR
@@ -147,7 +201,7 @@ index_content = <<~HTML
       <div class="card-body">
         <h5 class="card-title font-weight-bold">About Lecture Reports</h5>
         <p class="card-text text-secondary mb-2">
-          Welcome to the course website for <strong>Learning for Interactive Robots</strong> at UVA. Following the model of the <a href="https://iclr-blogposts.github.io/2026/about/" target="_blank">ICLR Blogposts Track</a>, student teams synthesize key concepts, foundational literature, and classroom discussions for each lecture in an interactive, Distill-style blog report.
+          Welcome to the course lecture report website for <strong>Learning for Interactive Robots</strong> at UVA. Following the model of the <a href="https://iclr-blogposts.github.io/2026/about/" target="_blank">ICLR Blogposts Track</a>, student teams synthesize key concepts, foundational literature, and classroom discussions for each lecture in an interactive, Distill-style blog report.
         </p>
         <p class="card-text text-secondary mb-0">
           Each team submits their lecture report through a <strong>Pull Request</strong> to the course GitHub repository following the <a href="#{baseurl}/submitting/">submission guide</a>. Once reviewed and merged, the report is published directly to this site.
@@ -392,13 +446,13 @@ schedule.select { |s| s['has_report'] }.each do |s|
           <div class="sticky-top pt-2" style="top: 80px;">
             <div class="card border-light shadow-sm">
               <div class="card-body p-3">
-                <h6 class="font-weight-bold mb-2 text-uppercase small text-muted">Table of Contents</h6>
+                <h6 class="font-weight-bold mb-2 text-uppercase small text-dark">Table of Contents</h6>
                 <nav class="nav flex-column small">
-                  <a class="nav-link py-1 text-secondary" href="#motivation">1. Motivation</a>
-                  <a class="nav-link py-1 text-secondary" href="#foundations">2. Theoretical Foundations</a>
-                  <a class="nav-link py-1 text-secondary" href="#discussion">3. Paper Syntheses</a>
-                  <a class="nav-link py-1 text-secondary" href="#analysis">4. Critical Analysis</a>
-                  <a class="nav-link py-1 text-secondary" href="#references">5. References</a>
+                  <a class="nav-link py-1 text-dark" href="#motivation">1. Motivation</a>
+                  <a class="nav-link py-1 text-dark" href="#foundations">2. Theoretical Foundations</a>
+                  <a class="nav-link py-1 text-dark" href="#discussion">3. Paper Syntheses</a>
+                  <a class="nav-link py-1 text-dark" href="#analysis">4. Critical Analysis</a>
+                  <a class="nav-link py-1 text-dark" href="#references">5. References</a>
                 </nav>
               </div>
             </div>

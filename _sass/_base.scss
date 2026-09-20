@@ -14,9 +14,14 @@ h6,
 em,
 div,
 li,
-span,
-strong {
+span {
   color: var(--global-text-color);
+}
+
+strong,
+b {
+  color: var(--global-text-color);
+  font-weight: 700;
 }
 
 hr {
@@ -36,7 +41,9 @@ table {
 }
 
 a,
-table.table a {
+a:visited,
+table.table a,
+table.table a:visited {
   color: var(--global-theme-color);
 
   &:hover {
@@ -46,6 +53,18 @@ table.table a {
 
   &:hover:after :not(.nav-item.dropdown) {
     width: 100%;
+  }
+}
+
+.btn-outline-primary,
+.btn-outline-primary:visited {
+  color: #007bff !important;
+  border-color: #007bff !important;
+
+  &:hover,
+  &:active {
+    color: #fff !important;
+    background-color: #007bff !important;
   }
 }
 
