@@ -98,12 +98,12 @@ might face losing important information in your blog post.
 To include images in your submission in this way, you must do something like the following:
 
 ```markdown
-{% raw %}{% include figure.liquid path="assets/img/2026-04-27-distill-example/iclr.png" class="img-fluid" %}{% endraw %}
+{% raw %}{% include figure.liquid path="assets/img/2026-04-27-distill-example/7.jpg" class="img-fluid" %}{% endraw %}
 ```
 
 which results in the following image:
 
-{% include figure.liquid path="assets/img/2026-04-27-distill-example/iclr.png" class="img-fluid" %}
+{% include figure.liquid path="assets/img/2026-04-27-distill-example/7.jpg" class="img-fluid" %}
 
 To ensure that there are no namespace conflicts, you must save your asset to your unique directory
 `/assets/img/2025-04-27-[SUBMISSION NAME]` within your submission.

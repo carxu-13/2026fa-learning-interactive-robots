@@ -111,8 +111,10 @@ For interactive HTML widgets (e.g., Plotly, Bokeh, D3, or three.js), place the H
 
 #### Bibliography & Citations
 
-Cite papers using the Jekyll Scholar syntax `{% cite citation_key %}`:
-- Example: `Recent work by {% cite brohan2022rt1 %} demonstrated end-to-end robotic control.`
+{% raw %}
+Cite papers using the Distill citation tag `<d-cite key="citation_key"></d-cite>` or Jekyll Scholar `{% cite citation_key %}`:
+- Example: `Recent work by <d-cite key="brohan2022rt1"></d-cite> demonstrated end-to-end robotic control.`
+{% endraw %}
 - Place matching BibTeX entries in `assets/bibliography/YYYY-MM-DD-[slug].bib`.
 - Citations and hover tooltips are automatically generated at the end of the post.
 

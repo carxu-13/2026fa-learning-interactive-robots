@@ -76,16 +76,6 @@
   }
 }
 
-.header-background .img {
-  background-image: url("../img/ICLR-logo.png");
-  background-repeat: no-repeat;
-  background-size: 400px;
-  background-position: center bottom;
-  height: 12em;
-  margin-bottom: 0em;
-  margin-top: -2.7em;
-}
-
 html[data-theme="dark"] {
   color-scheme: dark;
   --global-bg-color: #{$grey-color-dark};
@@ -130,17 +120,6 @@ html[data-theme="dark"] {
 
   .only-dark {
     display: block;
-  }
-
-  .header-background .img {
-    background-image: url("../img/ICLR-logo-dark.png");
-    background-repeat: no-repeat;
-    background-size: 400px;
-    background-position: center bottom;
-    height: 12em;
-    margin-bottom: 0em;
-    margin-top: -2.7em;
-    // filter: invert(89%);
   }
 }
 

@@ -9,3 +9,4 @@ vendor/
 *.swp
 *~
 node_modules/
+.tweet-cache/
