@@ -3,8 +3,8 @@ permalink: /assets/js/open-panel-analytics-setup.js
 ---
 window.op =
   window.op ||
-  function (...args) {
-    (window.op.q = window.op.q || []).push(args);
+  function () {
+    (window.op.q = window.op.q || []).push([].slice.call(arguments));
   };
 window.op("init", {
   clientId: "{{ site.openpanel_analytics }}",
