@@ -1,0 +1,156 @@
+# -----------------------------------------------------------------------------
+# Site settings
+# -----------------------------------------------------------------------------
+
+title: "Learning for Interactive Robots"
+first_name: "Interactive"
+middle_name:
+last_name: "Robots"
+contact_note: >
+  Course website for CS 6501 / CS 4501: Learning for Interactive Robots at the University of Virginia (Fall 2026).
+description: >
+  Course website and student lecture reports for UVA Learning for Interactive Robots (Fall 2026).
+footer_text: >
+  University of Virginia &middot; Department of Computer Science &middot; LIVE Lab &middot; Fall 2026.
+  Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
+keywords: robotics, interactive-robots, machine-learning, reinforcement-learning, foundation-models, human-robot-interaction, uva
+lang: en
+icon: 🤖
+
+url: https://live-robotics-uva.github.io
+baseurl: /2026fa-learning-interactive-robots
+last_updated: true
+impressum_path:
+back_to_top: true
+
+# -----------------------------------------------------------------------------
+# Theme
+# -----------------------------------------------------------------------------
+
+repo_theme_light: default
+repo_theme_dark: dark
+repo_trophies:
+  enabled: false
+
+# -----------------------------------------------------------------------------
+# Layout
+# -----------------------------------------------------------------------------
+
+navbar_fixed: true
+footer_fixed: true
+search_enabled: true
+socials_in_search: false
+posts_in_search: true
+bib_search: true
+
+# Dimensions
+max_width: 930px
+
+# -----------------------------------------------------------------------------
+# Open Graph & Schema.org
+# -----------------------------------------------------------------------------
+serve_og_meta: false
+serve_schema_org: false
+
+# -----------------------------------------------------------------------------
+# Blog
+# -----------------------------------------------------------------------------
+
+blog_name: "Lecture Reports"
+blog_description: "Student scribe reports and interactive syntheses for Learning for Interactive Robots"
+permalink: /blog/:year/:title/
+lsi: false
+
+# Pagination
+pagination:
+  enabled: true
+
+shuffle_posts:
+  enabled: false
+
+related_blog_posts:
+  enabled: false
+  max_related: 3
+
+# Giscus comments (can be configured with repository discussions)
+giscus:
+  repo: live-robotics-uva/2026fa-learning-interactive-robots
+  repo_id:
+  category: Comments
+  category_id:
+  mapping: title
+  strict: 1
+  reactions_enabled: 1
+  input_position: bottom
+  theme: preferred_color_scheme
+  emit_metadata: 0
+  lang: en
+
+# -----------------------------------------------------------------------------
+# Collections
+# -----------------------------------------------------------------------------
+
+collections:
+  news:
+    defaults:
+      layout: post
+    output: true
+
+# -----------------------------------------------------------------------------
+# Jekyll settings
+# -----------------------------------------------------------------------------
+
+future: true
+
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter_opts:
+    css_class: "highlight"
+    span:
+      line_numbers: false
+    block:
+      line_numbers: false
+      start_line: 1
+
+include: ["_pages", "_scripts", "index.md"]
+exclude:
+  - bin/
+  - CONTRIBUTING.md
+  - CUSTOMIZE.md
+  - Dockerfile
+  - docker-compose.yml
+  - docker-compose-slim.yml
+  - FAQ.md
+  - Gemfile
+  - Gemfile.lock
+  - INSTALL.md
+  - LICENSE
+  - lighthouse_results/
+  - package.json
+  - package-lock.json
+  - purgecss.config.js
+  - README.md
+  - readme_preview/
+  - vendor
+keep_files:
+  - CNAME
+  - .nojekyll
+
+# Plug-ins
+plugins:
+  - jekyll-archives-v2
+  - jekyll-email-protect
+  - jekyll-feed
+  - jekyll-imagemagick
+  - jekyll-jupyter-notebook
+  - jekyll-link-attributes
+  - jekyll-paginate-v2
+  - jekyll-redirect-from
+  - jekyll-regex-replace
+  - jekyll/scholar
+  - jekyll-sitemap
+  - jekyll-tabs
+  - jekyll-toc
+  - jemoji

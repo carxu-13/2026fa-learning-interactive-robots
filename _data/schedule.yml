@@ -1,0 +1,135 @@
+# Course schedule for UVA Learning for Interactive Robots (Fall 2026)
+- week: "Week 4"
+  date: "Wed, Sep 16"
+  topic: "Foundation Models for Vision"
+  has_report: true
+  slug: "2026-09-16-foundation-models-for-vision"
+  report_url: "/blog/2026/foundation-models-for-vision/"
+
+- week: "Week 5"
+  date: "Mon, Sep 21"
+  topic: "Foundation Models for Language"
+  has_report: true
+  slug: "2026-09-21-foundation-models-for-language"
+  report_url: "/blog/2026/foundation-models-for-language/"
+
+- week: "Week 5"
+  date: "Wed, Sep 23"
+  topic: "Foundation Models for Action"
+  has_report: true
+  slug: "2026-09-23-foundation-models-for-action"
+  report_url: "/blog/2026/foundation-models-for-action/"
+
+- week: "Week 6"
+  date: "Mon, Sep 28"
+  topic: "Tutorial"
+  has_report: false
+  note: "Tutorial (No report)"
+
+- week: "Week 6"
+  date: "Wed, Sep 30"
+  topic: "Language Grounding & Commonsense"
+  has_report: true
+  slug: "2026-09-30-language-grounding-commonsense"
+  report_url: "/blog/2026/language-grounding-commonsense/"
+
+- week: "Week 7"
+  date: "Mon, Oct 5"
+  topic: "No Class - Fall Reading Days"
+  has_report: false
+  note: "Fall Reading Days (No class)"
+
+- week: "Week 7"
+  date: "Wed, Oct 7"
+  topic: "Tutorial"
+  has_report: false
+  note: "Tutorial (No report)"
+
+- week: "Week 8"
+  date: "Mon, Oct 12"
+  topic: "Policy, World Model Code Generation"
+  has_report: true
+  slug: "2026-10-12-policy-world-model-code-generation"
+  report_url: "/blog/2026/policy-world-model-code-generation/"
+
+- week: "Week 8"
+  date: "Wed, Oct 14"
+  topic: "Feedback and Correction"
+  has_report: true
+  slug: "2026-10-14-feedback-and-correction"
+  report_url: "/blog/2026/feedback-and-correction/"
+
+- week: "Week 9"
+  date: "Mon, Oct 19"
+  topic: "Non-verbal Interaction and Learning Signals"
+  has_report: true
+  slug: "2026-10-19-non-verbal-interaction-and-learning-signals"
+  report_url: "/blog/2026/non-verbal-interaction-and-learning-signals/"
+
+- week: "Week 9"
+  date: "Wed, Oct 21"
+  topic: "Human Models"
+  has_report: true
+  slug: "2026-10-21-human-models"
+  report_url: "/blog/2026/human-models/"
+
+- week: "Week 10"
+  date: "Mon, Oct 26"
+  topic: "Intent/Trajectory Prediction"
+  has_report: true
+  slug: "2026-10-26-intent-trajectory-prediction"
+  report_url: "/blog/2026/intent-trajectory-prediction/"
+
+- week: "Week 10"
+  date: "Wed, Oct 28"
+  topic: "Preference, Influence"
+  has_report: true
+  slug: "2026-10-28-preference-influence"
+  report_url: "/blog/2026/preference-influence/"
+
+- week: "Week 11"
+  date: "Mon, Nov 2"
+  topic: "Social Interaction, Cooperation"
+  has_report: true
+  slug: "2026-11-02-social-interaction-cooperation"
+  report_url: "/blog/2026/social-interaction-cooperation/"
+
+- week: "Week 11"
+  date: "Wed, Nov 4"
+  topic: "Shared Autonomy"
+  has_report: true
+  slug: "2026-11-04-shared-autonomy"
+  report_url: "/blog/2026/shared-autonomy/"
+
+- week: "Week 12"
+  date: "Mon, Nov 9"
+  topic: "No Class - Project Feedback"
+  has_report: false
+  note: "Project Feedback (No class)"
+
+- week: "Week 12"
+  date: "Wed, Nov 11"
+  topic: "No Class - Project Feedback"
+  has_report: false
+  note: "Project Feedback (No class)"
+
+- week: "Week 13"
+  date: "Mon, Nov 16"
+  topic: "Human-in-the-loop Systems"
+  has_report: true
+  slug: "2026-11-16-human-in-the-loop-systems"
+  report_url: "/blog/2026/human-in-the-loop-systems/"
+
+- week: "Week 13"
+  date: "Wed, Nov 18"
+  topic: "Continual Learning, Multi-task Learning"
+  has_report: true
+  slug: "2026-11-18-continual-learning-multi-task-learning"
+  report_url: "/blog/2026/continual-learning-multi-task-learning/"
+
+- week: "Week 14"
+  date: "Mon, Nov 23"
+  topic: "Safety, Trust"
+  has_report: true
+  slug: "2026-11-23-safety-trust"
+  report_url: "/blog/2026/safety-trust/"
