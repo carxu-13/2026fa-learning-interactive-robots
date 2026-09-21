@@ -10,8 +10,6 @@ htmlwidgets: true
 authors:
   - name: "Yen-Ling Kuo"
     url: "https://yenlingkuo.com"
-    affiliations:
-      name: "University of Virginia"
 
 bibliography: 2026-09-16-foundation-models-for-vision.bib
 
@@ -334,5 +332,3 @@ In computer vision, images are detached from physical consequences. In robotics,
 ### 3. Leveraging Situatedness for Continuous Verification
 Robots are situated in the physical world. They do not deal with abstract
 descriptions, but with the here and now of the world directly influencing the behavior of the system, e.g., friction, collision avoidance, and temporal affordances under strict execution latency constraints. These can provides continuous verification of the model against reality.
-
----

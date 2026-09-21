@@ -149,7 +149,7 @@ Navigate to `http://localhost:4000/2026fa-learning-interactive-robots/`.
 
 - [ ] Post is located at `_posts/YYYY-MM-DD-[slug].md` with all lowercase letters and hyphens.
 - [ ] PR Title matches the filename: `YYYY-MM-DD-[slug]`.
-- [ ] All authors, student names, and affiliations are listed in the YAML front matter.
+- [ ] All authors and student names are listed in the YAML front matter.
 - [ ] Images are placed in `assets/img/YYYY-MM-DD-[slug]/`.
 - [ ] Citations are placed in `assets/bibliography/YYYY-MM-DD-[slug].bib`.
 - [ ] No files outside `_posts/` and your dedicated `assets/` subfolders have been modified.

@@ -4,6 +4,25 @@
 
 d-byline {
   border-top-color: var(--global-divider-color) !important;
+
+  .byline {
+    grid-template-columns: 1.5fr 1fr !important;
+  }
+
+  @media (min-width: 768px) {
+    .byline {
+      grid-template-columns: 1.5fr 1fr 1.5fr !important;
+    }
+  }
+
+  .authors-affiliations {
+    grid-column-end: span 1 !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .affiliation {
+    display: none !important;
+  }
 }
 
 d-byline h3 {
@@ -16,6 +35,12 @@ d-article d-byline a {
   &:hover {
     color: var(--global-hover-color) !important;
   }
+}
+
+#bibtex-container,
+#citation,
+pre.citation {
+  display: none !important;
 }
 
 d-article {
