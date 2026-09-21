@@ -66,7 +66,15 @@
                 </li>
               {% else %}
                 {% assign parent_link = p.permalink | remove: 'index.html' %}
-                <li class="nav-item {% if page.url contains parent_link %}active{% endif %}">
+                {% assign is_active = false %}
+                {% if parent_link == '/' %}
+                  {% if page.url == '/' or page.url == '/index.html' %}
+                    {% assign is_active = true %}
+                  {% endif %}
+                {% elsif page.url contains parent_link %}
+                  {% assign is_active = true %}
+                {% endif %}
+                <li class="nav-item {% if is_active %}active{% endif %}">
                   {%- if p.permalink contains '://' -%}
                     {%- assign url = p.permalink -%}
                   {%- elsif p.redirect_to -%}
@@ -80,7 +88,7 @@
                   {%- endif %}
                   <a class="nav-link" href="{% if url contains '://' %}{{ url }}{% else %}{{ url | relative_url }}{% endif %}" {% if url contains '://' %}target="_blank" rel="noopener noreferrer"{% endif %}>
                     {{- p.title }}
-                    {% if page.url contains p.url %}
+                    {% if is_active %}
                       <span class="sr-only">(current)</span>
                     {% endif %}
                   </a>
