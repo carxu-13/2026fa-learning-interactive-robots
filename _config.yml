@@ -2,6 +2,8 @@
 # Site settings
 # -----------------------------------------------------------------------------
 
+enable_math: true
+
 title: "Learning for Interactive Robots"
 first_name: "Interactive"
 middle_name:
@@ -106,6 +108,7 @@ markdown: kramdown
 highlighter: rouge
 kramdown:
   input: GFM
+  math_engine: mathjax
   syntax_highlighter_opts:
     css_class: "highlight"
     span:
@@ -117,6 +120,7 @@ kramdown:
 include: [".nojekyll", "_pages", "_scripts", "index.md"]
 exclude:
   - bin/
+  - tmp/
   - CONTRIBUTING.md
   - CUSTOMIZE.md
   - Dockerfile

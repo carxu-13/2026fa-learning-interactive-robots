@@ -10,3 +10,4 @@ vendor/
 *~
 node_modules/
 .tweet-cache/
+tmp/
