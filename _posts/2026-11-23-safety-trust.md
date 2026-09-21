@@ -5,6 +5,7 @@ description: "Control barrier functions, reachability analysis, human trust dyna
 date: 2026-11-23
 future: true
 htmlwidgets: true
+ready: false
 
 # Reporter team authors
 authors:

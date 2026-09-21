@@ -5,6 +5,7 @@ description: "Learning human reward functions and preferences from pairwise comp
 date: 2026-10-28
 future: true
 htmlwidgets: true
+ready: false
 
 # Reporter team authors
 authors:

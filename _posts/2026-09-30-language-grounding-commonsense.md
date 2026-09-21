@@ -5,6 +5,7 @@ description: "Grounding natural language commands into physical environments, sp
 date: 2026-09-30
 future: true
 htmlwidgets: true
+ready: false
 
 # Reporter team authors
 authors:

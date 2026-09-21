@@ -5,6 +5,7 @@ description: "Forecasting human motion and navigation trajectories in shared phy
 date: 2026-10-26
 future: true
 htmlwidgets: true
+ready: false
 
 # Reporter team authors
 authors:

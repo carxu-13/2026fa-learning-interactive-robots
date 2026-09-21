@@ -5,6 +5,7 @@ description: "Computational human models: Boltzmann rationality, bounded rationa
 date: 2026-10-21
 future: true
 htmlwidgets: true
+ready: false
 
 # Reporter team authors
 authors:

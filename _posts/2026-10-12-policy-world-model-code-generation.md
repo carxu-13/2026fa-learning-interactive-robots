@@ -5,6 +5,7 @@ description: "Generative policies, world model rollouts, and using LLMs for robo
 date: 2026-10-12
 future: true
 htmlwidgets: true
+ready: false
 
 # Reporter team authors
 authors:

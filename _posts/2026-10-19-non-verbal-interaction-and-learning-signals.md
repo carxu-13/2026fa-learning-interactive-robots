@@ -5,6 +5,7 @@ description: "Implicit communication and learning signals: human gaze, head pose
 date: 2026-10-19
 future: true
 htmlwidgets: true
+ready: false
 
 # Reporter team authors
 authors:

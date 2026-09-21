@@ -65,6 +65,7 @@ description: "A concise 1-2 sentence abstract summarizing the key insights of th
 date: 2026-09-16
 future: true
 htmlwidgets: true
+ready: true # Set to true when your report is complete and ready to be linked on the schedule
 
 authors:
   - name: "Alice Smith"

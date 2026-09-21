@@ -5,6 +5,7 @@ description: "Blending human teleoperation and robot autonomy for assistive devi
 date: 2026-11-04
 future: true
 htmlwidgets: true
+ready: false
 
 # Reporter team authors
 authors:

@@ -5,6 +5,7 @@ description: "Pre-trained vision foundation models (CLIP, SigLIP, V-JEPA 2) and 
 date: 2026-09-16
 future: true
 htmlwidgets: true
+ready: true
 
 # Authors
 authors:

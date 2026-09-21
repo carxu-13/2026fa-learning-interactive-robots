@@ -46,7 +46,15 @@ nav_order: 1
               <td>{{ session.date }}</td>
               <td>{{ session.topic }}</td>
               <td class="text-center">
+                {% assign is_linked = false %}
                 {% if session.has_report %}
+                  {% for post in site.posts %}
+                    {% if post.url == session.report_url and post.ready %}
+                      {% assign is_linked = true %}
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+                {% if is_linked %}
                   <a href="{{ session.report_url | relative_url }}" class="btn btn-sm btn-outline-primary px-3 py-1 font-weight-medium">
                     Read Report &rarr;
                   </a>
