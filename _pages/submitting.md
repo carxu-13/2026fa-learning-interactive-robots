@@ -38,7 +38,6 @@ This workflow gives students hands-on experience producing high-quality, reprodu
    - Set the PR title to **exactly match your post slug**: `YYYY-MM-DD-[slug]`.
    - Fill out the PR template checklist.
 
-> [!WARNING]
 > **Strict File Modification Filter**
 > Automated CI checks (`filter-files.yml`) strictly verify that your PR modifies **ONLY** allowed files:
 > - `_posts/YYYY-MM-DD-[slug].md`
@@ -99,13 +98,15 @@ $$
 
 Static images should be placed in `assets/img/YYYY-MM-DD-[slug]/`. To embed images with captions and responsive scaling, use the Liquid `figure` include:
 
+{% raw %}
 ```liquid
 {% include figure.liquid 
-   path="assets/img/2026-09-16-foundation-models-for-vision/architecture.png" 
+   path="assets/img/YYYY-MM-DD-[slug]/architecture.png" 
    class="img-fluid rounded z-depth-1" 
    caption="Figure 1: Vision-Language-Action architecture diagram." 
 %}
 ```
+{% endraw %}
 
 For interactive HTML widgets (e.g., Plotly, Bokeh, D3, or three.js), place the HTML bundle in `assets/html/YYYY-MM-DD-[slug]/` and embed with an `<iframe>` or the interactive figure include.
 
