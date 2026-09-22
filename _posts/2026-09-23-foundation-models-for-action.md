@@ -9,7 +9,7 @@ ready: false
 
 # Reporter team authors
 authors:
-  - name: "Reporter Team (Student Names)"
+  - name: "Reporter Team (Angelica Bain, Srikar Bangaru, Samriddhi Kumar, Caroline Xu)"
 
 bibliography: 2026-09-23-foundation-models-for-action.bib
 
