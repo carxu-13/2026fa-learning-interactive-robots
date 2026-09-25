@@ -81,10 +81,17 @@ $$
 Here, $v_{\theta}$ predicts how each component of the candidate chunk should change, $\Delta\tau$ represents a small step in generation time. Each Euler step is one completion of the update, multiplied by $\Delta\tau$, then added to the current chunk.
 
 ### Experiment and Evaluation
-The paper collects data from a wide range of objects and environments, but the data was only gathered from one-two cameras and with low frequency control. To learn more complex tasks, the paper collected over 10,000 hours worth of data completing these complex tasks, which could look like throwing many specific items into the garbage. As mentioned earlier, they used seven different robot types, with varying numbers of cameras and kinematic properties. They run a few sets of experiments, such as seeing how $\pi_0$ performs after only pre-training, how well $\pi_0$ adapts to complex tasks, specifically for dexterous tasks.
+{% include figure.liquid 
+   path="assets/img/2026-09-23-foundation-models-for-action/pi0_results.png" 
+   class="img-fluid rounded z-depth-1" 
+   caption="Figure 2: The full pre-trained $\pi_0$ model attains more than 50% of the maximum score across all the tasks.Out-of-box pre-training means the model was only pre-trained, as opposed to both pre-trained + fine-tuned, and only finetuned. A score of 1.0 represents perfect execution." 
+%}
+The paper collects data from a wide range of objects and environments, but the data was only gathered from one or two cameras and with low frequency control. To learn more complex tasks, the paper collected over 10,000 hours worth of data completing these complex tasks, which could look like throwing many specific items into the garbage. As mentioned earlier, they used seven different robot types, with varying numbers of cameras and kinematic properties. They run a few sets of experiments, such as seeing how $\pi_0$ performs after only pre-training, how well $\pi_0$ adapts to complex tasks, specifically for dexterous tasks.
+
+As shown in Figure 2, $\pi_0$ outperformed all other ablated $\pi_0$ models for tasks present in pre-training. The fully pre-trained $\pi_0$ model attains more than 50% of the maximum score across all of the tasks. The results show that many of the difficult tasks show large improvement from using the pre-trained model, showing that pre-training is especially useful with harder tasks.
 
 ### Limitations and Open Challenges
-Although the paper tested with various robot embodiments during training, and found that $\pi_0$ was able to generalize skills to complete these new tasks through fine-tuning, $\pi_0$ is not able to generalize to a truly unseen robot. This paper does not provide a clean zero-shot evaluation where an entire robot is omitted during pretraining, and then deployed on a completely unseen robot. Additionally, $\pi_0$ is not tested for in-context learning, which could be an interesting to conduct research on in the future.
+Although the paper tested with various robot embodiments during training, and found that $\pi_0$ was able to generalize skills to complete these new tasks through fine-tuning, $\pi_0$ is not able to generalize to a truly unseen robot. This paper does not provide a clean zero-shot evaluation where an entire robot is omitted during pretraining, and then deployed on a completely unseen robot. Additionally, $\pi_0$ is not tested for in-context learning, which could be an interesting to conduct research on in the future. 
 
 ## Cross-Paradigm Comparison
 
