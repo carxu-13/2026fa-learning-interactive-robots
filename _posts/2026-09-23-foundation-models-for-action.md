@@ -60,7 +60,7 @@ Together, these approaches highlight two complementary components of general rob
 
 A central goal in robot learning is to learn control policies directly from demonstrations. In **behavior cloning**, demonstrations pair observations of the robot and its environment with the controls executed by a human or expert controller. The policy is then trained through supervised learning to reproduce appropriate controls from the robot's current context.
 
-Although this resembles a standard supervised learning problem, predicting robot actions introduces several additional challenges. The Diffusion Policy paper highlights three in particular: **multimodal action distributions**, **sequential correlation between actions**, and the need for **high-precision control**. <d-cite key="chi2023diffusion"></d-cite>
+Although this resembles a standard supervised learning problem, predicting robot actions introduces several additional challenges. The Diffusion Policy paper highlights three in particular: **multimodal action distributions**, **sequential correlation between actions**, and the need for **high-precision control**.
 
 Robot actions are sequential because a control decision at one timestep constrains which actions are sensible at the next. They must also remain precise after being physically executed: small errors can alter the state of the environment and affect all subsequent actions. Most importantly, the same situation may have several different successful solutions rather than one uniquely correct action.
 
@@ -90,7 +90,7 @@ Diffusion Policy also generates **sequences of actions rather than isolated cont
 
 ### Diffusion for Robot Actions {#diffusion-for-robot-actions}
 
-Diffusion Policy adapts **denoising diffusion models** to robot control. In a conventional diffusion model, the goal is to learn how to reverse a process that gradually corrupts data with noise. Diffusion Policy applies the same idea to robot behavior: instead of denoising an image, the model denoises an **action sequence**. <d-cite key="chi2023diffusion"></d-cite>
+Diffusion Policy adapts **denoising diffusion models** to robot control. In a conventional diffusion model, the goal is to learn how to reverse a process that gradually corrupts data with noise. Diffusion Policy applies the same idea to robot behavior: instead of denoising an image, the model denoises an **action sequence**.
 
 During training, the model begins with a clean action chunk from a robot demonstration and adds Gaussian noise at a randomly selected diffusion level. The presentation describes this corruption process as
 
@@ -241,7 +241,7 @@ The Push-T example illustrates this clearly: from the same state, the robot can 
    caption="Figure 4: Multimodal behavior in the Push-T task. Diffusion Policy represents both the left and right approaches while committing to a single coherent mode within each rollout. Adapted from Chi et al."
 %}
 
-Diffusion Policy also maintains **temporal consistency** by generating an entire action sequence jointly. This prevents consecutive actions from switching between different valid strategies. The paper demonstrates both **short-horizon multimodality**, such as approaching an object from different directions, and **long-horizon multimodality**, where subtasks can be completed in different valid orders. <d-cite key="chi2023diffusion"></d-cite>
+Diffusion Policy also maintains **temporal consistency** by generating an entire action sequence jointly. This prevents consecutive actions from switching between different valid strategies. The paper demonstrates both **short-horizon multimodality**, such as approaching an object from different directions, and **long-horizon multimodality**, where subtasks can be completed in different valid orders.
 
 **Synergy with position control.** Another important design decision is the representation of the robot's actions. Many previous behavior-cloning systems use **velocity control**, where the policy predicts how fast and in what direction the robot should move. Diffusion Policy instead performs particularly well with **position control**, where the policy predicts desired positions directly.
 
@@ -275,6 +275,8 @@ Despite these results, the method has two important limitations.
 **Inference latency.** Diffusion Policy requires **multiple denoising steps during inference**, making it more computationally expensive than policies that generate actions in a single forward pass. The authors use DDIM to reduce the number of inference iterations, but the paper notes that the remaining computational cost may still be too high for tasks requiring very high-rate control. 
 
 Overall, the experiments provide broad evidence for Diffusion Policy across a range of manipulation tasks, while its reliance on demonstration data and iterative inference remain important limitations for real-time deployment.
+
+**Additional resource.** The presenting team also recommended [*Diffusion Policy: LeRobot Research Presentation #2 by Cheng Chi*](https://www.youtube.com/watch?v=M03sZFfW-qU) for a more detailed walkthrough of the method and its design choices.
 
 ## $\pi_0$: A Vision-Language-Action Flow Model for General Robot Control
 
