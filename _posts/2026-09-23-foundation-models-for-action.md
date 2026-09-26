@@ -108,10 +108,22 @@ The two foundation model paradigms discussed during lecture shared similar ideas
 | **Primary Robotic Use** | High-level task planning, object retrieval, open-world detection | Trajectory planning, visual affordance prediction |
 ## Presentation Q&A
 
-During the lecture, several technical questions were raised by the presenting team concerning the capabilities of VLAs:
+During the lecture, several technical questions were raised by the presenting team concerning the capabilities and limitations of Vision-Language-Action (VLA) models. Not every question could be fully discussed during the presentation, so the summaries below reflect the points that were actually raised in class.
 
-**Question 1:** Do you expect VLAs (vision-language-action models) to exhibit the same scaling properties (neural scaling laws) as LLMs? Why or why not?  
+**Question 1:** Do you expect VLAs (Vision-Language-Action models) to exhibit the same scaling properties, or neural scaling laws, as LLMs? Why or why not?
 
-**Question 2:** Do you expect VLAs to be a sufficient approach to master all physical intelligence tasks?  
+The discussion emphasized that scaling VLAs is more difficult than scaling language models because the available data is fundamentally different. LLMs can be trained on extremely large quantities of text collected from the internet, while high-quality robot action data requires interaction with the physical world and is much more expensive to collect. Robot demonstrations also depend on the robot embodiment, sensors, action space, and physical environment, making the data less interchangeable than text.
 
-**Question 3:** Do you think backpropagating through the LLM during VLA training could improve learned representations of the LLM?  
+This suggests that simply increasing model size may not produce the same improvements seen in LLMs unless robot datasets also increase substantially in scale and diversity. The class discussion therefore focused on **data availability as a major bottleneck for VLA scaling**, particularly because physical interaction data is much harder to obtain than internet-scale language or image data.
+
+**Question 2:** Do you expect VLAs to be a sufficient approach to master all physical intelligence tasks?
+
+The discussion was more skeptical that the current VLA formulation alone would be sufficient for all physical intelligence. A recurring point in the lecture was that **understanding what task should be performed is not the same as successfully executing it**. Vision-language models provide useful semantic knowledge, but robot policies must also generate precise and temporally consistent continuous actions that remain successful under contact, execution error, and changes in the environment.
+
+The discussion also raised the limitation that many VLA architectures are still largely built around models originally designed for language. While this provides strong semantic reasoning, it does not necessarily mean that the architecture is naturally suited for representing continuous robot motion. The need to fine-tune policies for individual tasks or embodiments was also discussed as a potential barrier to truly general-purpose physical intelligence.
+
+Thus, the discussion suggested that VLAs are a promising direction for combining semantic understanding with control, but broader physical intelligence may still require better action representations, stronger closed-loop feedback, and architectures designed more directly around interaction with the physical world.
+
+**Question 3:** Do you think backpropagating through the LLM during VLA training could improve the learned representations of the LLM?
+
+This question was raised during the presentation but was **not discussed in enough depth to reach a clear conclusion**. One related issue discussed during the lecture was whether keeping a pretrained language or vision-language backbone largely fixed limits how much the representation can adapt to robot-specific information. However, the class did not reach a detailed conclusion about whether backpropagating through the full LLM would improve VLA representations or whether the additional training cost and adaptation would be worthwhile.
