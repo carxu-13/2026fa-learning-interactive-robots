@@ -88,6 +88,109 @@ Diffusion Policy <d-cite key="chi2023diffusion"></d-cite> takes the third approa
 
 Diffusion Policy also generates **sequences of actions rather than isolated controls**. This is important because robot actions are temporally dependent: once the robot begins following one strategy, subsequent actions should remain consistent with that decision. Jointly generating a sequence gives the policy a way to model these dependencies and produce coherent trajectories over multiple control steps.
 
+### Diffusion for Robot Actions {#diffusion-for-robot-actions}
+
+Diffusion Policy adapts **denoising diffusion models** to robot control. In a conventional diffusion model, the goal is to learn how to reverse a process that gradually corrupts data with noise. Diffusion Policy applies the same idea to robot behavior: instead of denoising an image, the model denoises an **action sequence**. <d-cite key="chi2023diffusion"></d-cite>
+
+During training, the model begins with a clean action chunk from a robot demonstration and adds Gaussian noise at a randomly selected diffusion level. The presentation describes this corruption process as
+
+$$
+A^k = \sqrt{\bar{\alpha}_k} A^0
+      + \sqrt{1-\bar{\alpha}_k}\epsilon.
+$$
+
+Where:
+
+- $$A^0$$ is the original, clean action chunk from the demonstration
+- $$A^k$$ is the corrupted version of that action chunk at diffusion step $$k$$
+- $$k$$ is the **diffusion timestep**, indicating the current noise level
+- $$\bar{\alpha}_k$$ controls how much of the original action signal is retained at diffusion step $$k$$
+- $$\epsilon$$ is sampled Gaussian noise
+- $$\sqrt{\bar{\alpha}_k}A^0$$ represents the portion of the demonstrated action sequence that remains
+- $$\sqrt{1-\bar{\alpha}_k}\epsilon$$ represents the noise added to the action sequence
+
+The network is then trained to predict the noise that was injected into the demonstrated action chunk. The training objective is:
+
+$$
+\mathcal{L}
+=
+\mathbb{E}
+\left[
+\left\|
+\epsilon -
+\epsilon_\theta(A^k,o,k)
+\right\|^2
+\right].
+$$
+
+Where:
+
+- $$\mathcal{L}$$ is the loss minimized during training
+- $$\mathbb{E}$$ indicates that the loss is averaged across demonstrated action chunks, sampled noise, and different diffusion levels
+- $$\epsilon$$ is the actual Gaussian noise that was added
+- $$\epsilon_\theta$$ is the neural network trained to predict that noise
+- $$\theta$$ denotes the learned parameters of the network
+- $$A^k$$ is the corrupted action chunk
+- $$o$$ is the observation that provides the robot's current context
+- $$k$$ tells the network the current diffusion noise level
+- $$\|\cdot\|^2$$ measures the squared error between the true injected noise and the model's prediction
+
+The training problem can therefore be interpreted as **learning to reverse corruption**. Given a noisy action sequence and the robot's current observation, the network learns which part of the sequence should be treated as noise.
+
+At inference time, this process is reversed. There is no demonstrated action chunk to corrupt. Instead, the policy:
+
+1. encodes the current robot observation,
+2. initializes a random Gaussian sample with the dimensions of the full action chunk,
+3. repeatedly predicts and removes noise over $$K$$ denoising steps, conditioning each step on the observation, and
+4. returns the final denoised sequence as a candidate robot action chunk
+
+Here, $$K$$ denotes the total number of iterative denoising steps used to transform the initially random sample into a structured action sequence.
+
+An important consequence of this generative formulation is that **different random initializations can produce different valid behaviors for the same observation**. Rather than collapsing several demonstrated strategies into one average prediction, the diffusion process can generate samples corresponding to different modes of the learned action distribution. <d-cite key="chi2023diffusion"></d-cite>
+
+### Visual Conditioning and Model Architecture {#visual-conditioning-and-model-architecture}
+
+The denoising process described above cannot generate useful robot actions from the noisy action chunk alone. The generated trajectory must also depend on **what the robot currently observes**.
+
+Diffusion Policy therefore models a conditional action distribution
+
+$$
+p(A_t \mid O_t),
+$$
+
+where:
+
+- $$A_t$$ is the sequence of future actions being generated beginning at robot time $$t$$.
+- $$O_t$$ represents the robot's recent observations.
+- $$p(A_t \mid O_t)$$ is the probability distribution over possible action sequences conditioned on those observations.
+
+Rather than jointly generating future observations and actions, Diffusion Policy directly generates actions **conditioned on the current observation**. This avoids the additional computational cost of predicting future visual states and makes the formulation more suitable for real-time robot control. 
+
+Visual observations are first passed through a visual encoder to produce a compact representation that can be reused throughout the denoising process. The paper uses a modified **ResNet-18** visual encoder and trains it jointly with the policy. Different camera views are encoded separately and then combined into the observation representation. <d-cite key="chi2023diffusion"></d-cite>
+
+The paper considers two architectures for the noise-prediction network $$\epsilon_\theta$$: a **temporal CNN** and a **Transformer**.
+
+{% include figure.liquid
+   path="assets/img/2026-09-23-foundation-models-for-action/diffusion-policy-overview.png"
+   class="img-fluid rounded z-depth-1"
+   caption="Figure 2: Diffusion Policy overview. The policy conditions repeated denoising of an action sequence on recent robot observations. The paper implements the noise-prediction network using either a temporal CNN with FiLM conditioning or a Transformer with cross-attention. Adapted from Chi et al."
+%}
+
+**CNN-based Diffusion Policy.** The CNN implementation applies one-dimensional temporal convolutions along the action sequence. This allows the model to capture local temporal relationships between neighboring actions.
+
+The observation representation is incorporated using **Feature-wise Linear Modulation (FiLM)**. As illustrated in Figure 2, the observation-derived conditioning parameters modify intermediate CNN features during denoising. The diffusion timestep $$k$$ is also provided to the network so that it knows the current noise level.
+
+The CNN-based implementation performed well across many of the evaluated tasks and generally required relatively little task-specific hyperparameter tuning. However, the paper notes that temporal convolution can over-smooth signals when the desired actions change rapidly over time. 
+
+**Transformer-based Diffusion Policy.** The Transformer implementation instead represents the noisy action sequence as a sequence of **action embeddings**. The robot observation is converted into a separate sequence of **observation embeddings**.
+
+Within each Transformer decoder block, **cross-attention** allows the action representations to access information from the observation. In this way, the network can use the current scene and robot state to determine how each component of the noisy action trajectory should be updated. The Transformer also uses causal attention over the action sequence, so each action representation attends only to itself and previous action representations. This preserves the temporal structure of the predicted trajectory.
+
+The Transformer architecture is particularly useful for tasks involving more complex or rapidly changing action sequences. In the paper's state-based experiments, Transformer variants often performed best when task complexity and the rate of action change were high. However, the authors also found the Transformer to be more sensitive to hyperparameter choices than the CNN implementation. <d-cite key="chi2023diffusion"></d-cite>
+
+Both architectures ultimately serve the same role: given the current noisy action sequence, the robot observation, and the diffusion timestep, they predict the noise that should be removed. Repeating this prediction over multiple denoising steps transforms an initially random action chunk into one that is consistent with the robot's current physical context.
+
+
 
 ## $\pi_0$: A Vision-Language-Action Flow Model for General Robot Control
 
