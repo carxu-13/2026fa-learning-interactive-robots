@@ -35,7 +35,7 @@ This lecture report covers the **Foundation Models for Action** session in *Lear
 > **Topic Overview**: Vision-Language-Action (VLA) models (RT-1, RT-2, OpenVLA) trained on internet-scale multimodal data and cross-embodiment robot demonstrations.
 
 
-## $\pi_0$: A Vision-Language-Action Flow Model for General Robot Control
+## $\pi_0$: A Vision-Language-Action Flow Model for General Robot Control 
 
 $\pi_0$ builds on the framework of generating an entire action sequence, by combining this approach with a pretrained VLM, to create a generalist VLA model. 
 
