@@ -263,7 +263,18 @@ Sequence prediction also provides robustness to **idle actions** in demonstratio
 
 Together, these properties explain why the diffusion representation is useful beyond simply being another way to predict actions. It provides a policy representation that can capture multiple possible behaviors, maintain consistency across time, scale to action sequences, and work effectively with position-based robot control.
 
+### Experiments and Limitations {#experiments-and-limitations}
+Diffusion Policy was evaluated across **15 tasks from four robot-manipulation benchmarks**, spanning both simulated and real-world environments. The paper reports an average **46.9% improvement in success rate** over the compared behavior-cloning methods. <d-cite key="chi2023diffusion"></d-cite>
 
+The evaluation includes tasks with different action dimensions, state- and image-based observations, single- and multi-stage manipulation, and both rigid and fluid objects. These results suggest that the benefits of Diffusion Policy are not limited to a single task or setting. 
+
+Despite these results, the method has two important limitations.
+
+**Dependence on demonstration data.** Because Diffusion Policy is trained through behavior cloning, its performance still depends on the quality and coverage of the demonstrations. Inadequate demonstration data can lead to poor performance even if the action distribution is modeled effectively.
+
+**Inference latency.** Diffusion Policy requires **multiple denoising steps during inference**, making it more computationally expensive than policies that generate actions in a single forward pass. The authors use DDIM to reduce the number of inference iterations, but the paper notes that the remaining computational cost may still be too high for tasks requiring very high-rate control. 
+
+Overall, the experiments provide broad evidence for Diffusion Policy across a range of manipulation tasks, while its reliance on demonstration data and iterative inference remain important limitations for real-time deployment.
 
 ## $\pi_0$: A Vision-Language-Action Flow Model for General Robot Control
 
