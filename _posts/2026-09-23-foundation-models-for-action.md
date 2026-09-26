@@ -190,6 +190,79 @@ The Transformer architecture is particularly useful for tasks involving more com
 
 Both architectures ultimately serve the same role: given the current noisy action sequence, the robot observation, and the diffusion timestep, they predict the noise that should be removed. Repeating this prediction over multiple denoising steps transforms an initially random action chunk into one that is consistent with the robot's current physical context.
 
+### Action Chunking and Receding-Horizon Control {#action-chunking-and-receding-horizon-control}
+
+Diffusion Policy generates **sequences of future actions**, or action chunks, rather than predicting each control independently. In the notation used during the lecture,
+
+$$
+A_t = [a_t, \ldots, a_{t+H-1}],
+$$
+
+where $$A_t$$ is the action chunk generated at robot time $$t$$, $$a_t$$ is an individual control command, and $$H$$ is the number of future actions in the sequence.
+
+Predicting several actions jointly helps capture **temporal dependence**: once the robot begins following one strategy, later actions should remain consistent with that decision. However, the robot does not execute the entire chunk. Instead, it executes only the first $$h$$ actions, where $$ h \leq H, $$
+
+then receives a new observation and generates another action chunk. This is a form of **receding-horizon control**, in which the policy plans farther ahead than it commits.
+
+A question raised during the lecture was: **Why is $$h \leq H$$? If the robot only executes $$h$$ actions, why generate a longer sequence of $$H$$ actions?**
+
+The two horizons serve different purposes. A longer prediction gives the policy enough temporal context to generate a coherent trajectory, while executing only a shorter prefix allows the robot to re-observe and correct for contact dynamics, sensing noise, or execution error before committing too far into the future.
+
+In the paper's notation, this is described using three horizons: <d-cite key="chi2023diffusion"></d-cite>
+
+- **Observation horizon ($$T_o$$):** number of recent observations given to the policy.
+- **Prediction horizon ($$T_p$$):** number of future actions predicted.
+- **Action horizon ($$T_a$$):** number of predicted actions executed before replanning.
+
+Thus, the lecture's $$H$$ corresponds conceptually to the prediction horizon, while $$h$$ corresponds to the shorter execution horizon. This creates a trade-off between **temporal consistency and responsiveness**.
+
+{% include figure.liquid
+   path="assets/img/2026-09-23-foundation-models-for-action/diffusion-policy-horizon-ablation.png"
+   class="img-fluid rounded z-depth-1 mx-auto d-block"
+   width="75%"
+   max-width="75%"
+   caption="Figure 3: Action-horizon and latency ablations for Diffusion Policy. Increasing the action horizon initially improves temporal consistency, but very long execution horizons reduce responsiveness to new observations. The latency experiment evaluates how performance changes when delays are introduced between observation and action execution. Adapted from Chi et al."
+%}
+
+The action-horizon ablation demonstrates this trade-off experimentally. Performance initially improves as the action horizon increases, but eventually decreases when the robot remains open-loop for too long. The paper reports that an action horizon of eight steps performed best for most evaluated tasks. <d-cite key="chi2023diffusion"></d-cite>
+
+### Key Properties of Diffusion Policy {#key-properties-of-diffusion-policy}
+
+
+**Multimodal behavior and temporal consistency.** One of Diffusion Policy's main advantages is its ability to represent multiple valid behaviors without averaging them together. Because inference begins from a random action sample, different rollouts can converge to different modes of the learned action distribution.
+
+The Push-T example illustrates this clearly: from the same state, the robot can move around either the left or right side of the T-shaped block before pushing it toward the target.
+
+{% include figure.liquid
+   path="assets/img/2026-09-23-foundation-models-for-action/diffusion-policy-multimodal-behavior.png"
+   class="img-fluid rounded z-depth-1 mx-auto d-block"
+   width="80%"
+   max-width="80%"
+   caption="Figure 4: Multimodal behavior in the Push-T task. Diffusion Policy represents both the left and right approaches while committing to a single coherent mode within each rollout. Adapted from Chi et al."
+%}
+
+Diffusion Policy also maintains **temporal consistency** by generating an entire action sequence jointly. This prevents consecutive actions from switching between different valid strategies. The paper demonstrates both **short-horizon multimodality**, such as approaching an object from different directions, and **long-horizon multimodality**, where subtasks can be completed in different valid orders. <d-cite key="chi2023diffusion"></d-cite>
+
+**Synergy with position control.** Another important design decision is the representation of the robot's actions. Many previous behavior-cloning systems use **velocity control**, where the policy predicts how fast and in what direction the robot should move. Diffusion Policy instead performs particularly well with **position control**, where the policy predicts desired positions directly.
+
+{% include figure.liquid
+   path="assets/img/2026-09-23-foundation-models-for-action/diffusion-policy-position-control.png"
+   class="img-fluid rounded z-depth-1 mx-auto d-block"
+   width="70%"
+   max-width="70%"
+   caption="Figure 5: Effect of switching from velocity to position control. While the evaluated baseline methods generally lose performance under position control, Diffusion Policy is able to benefit from the position-based action representation. Adapted from Chi et al."
+%}
+
+The authors suggest two reasons for this result. First, position-control actions can produce more pronounced multimodality because there may be several different desired positions that lead to successful behavior. Second, position control is less affected by **compounding error** when predicting sequences of future actions. With velocity control, a small error in one predicted velocity changes the resulting position and can affect every later command. Position targets provide a more direct reference for where the robot should move. <d-cite key="chi2023diffusion"></d-cite>
+
+**High-dimensional action-sequence prediction.**  Diffusion models scale well to high-dimensional outputs, allowing Diffusion Policy to predict full action sequences rather than isolated controls. This supports the temporal consistency discussed above and reduces the need to make each decision independently.
+
+Sequence prediction also provides robustness to **idle actions** in demonstrations. During teleoperation, a demonstrator may pause temporarily, creating repeated position commands or near-zero velocities. Single-step behavior-cloning policies can overfit to these pauses and become stuck. By modeling actions as part of a longer sequence, Diffusion Policy can better represent the broader motion surrounding an idle period rather than treating the pause as an isolated target action. 
+
+**Training stability.** Finally, the paper reports that Diffusion Policy is relatively stable to train compared with implicit energy-based policies such as IBC. Energy-based policies often require negative sampling during training and can exhibit unstable evaluation performance even while their training objective decreases. Diffusion Policy instead learns the gradient used to denoise actions without requiring the same normalization procedure, resulting in more consistent training behavior and less task-specific hyperparameter tuning. <d-cite key="chi2023diffusion"></d-cite>
+
+Together, these properties explain why the diffusion representation is useful beyond simply being another way to predict actions. It provides a policy representation that can capture multiple possible behaviors, maintain consistency across time, scale to action sequences, and work effectively with position-based robot control.
+
 
 
 ## $\pi_0$: A Vision-Language-Action Flow Model for General Robot Control
