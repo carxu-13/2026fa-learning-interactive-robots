@@ -35,7 +35,6 @@ toc:
     subsections:
     - name: "Shared Principle: Generative Action Chunks"
     - name: "Key Differences"
-    - name: "Interpreting the Evidence"
   - name: "Question and Answer"
 
 ---
@@ -299,62 +298,62 @@ The paper identifies three obstacles to building robot foundation models. First,
 The resulting policy models
 
 $$
-p(\mathbf{A}_t \mid \mathbf{o}_t),
+p(A_t \mid o_t)
 $$
 
-where $\mathbf{A}_t=[\mathbf{a}_t,\ldots,\mathbf{a}_{t+H-1}]$ is a chunk of future actions and $\mathbf{o}_t=[\mathbf{I}_t^1,\ldots,\mathbf{I}_t^n,\ell_t,\mathbf{q}_t]$ contains multiple camera images, the language instruction, and the robot's proprioceptive state. In the experiments, the action horizon is **$H=50$**. This formulation connects the semantic question of *what task should be performed* with the control question of *what continuous motion should be executed next*.
+where $A_t=[a_t,\ldots,a_{t+H-1}]$ is a chunk of future actions and $o_t=[I_t^1,\ldots,I_t^n,\ell_t,q_t]$ contains multiple camera images, the language instruction, and the robot's proprioceptive state. In the experiments, the action horizon is **$H=50$**. This formulation connects the semantic question of *what task should be performed* with the control question of *what continuous motion should be executed next*?
 
 ### Model Architecture {#pi0-model-architecture}
 
 {% include figure.liquid
    path="assets/img/2026-09-23-foundation-models-for-action/pi0_framework.png"
    class="img-fluid rounded z-depth-1"
-   caption="Figure 6: Overview of the $\pi_0$ framework. A broad pretraining mixture is used to train a VLA model composed of a pretrained PaliGemma backbone and a smaller action expert. The resulting policy can control multiple robot embodiments and can be post-trained for demanding downstream tasks. Adapted from Black et al."
+   caption="Figure 6: Overview of the $\pi_0$ framework. A broad pretraining mixture is used to train a VLA model composed of a pretrained PaliGemma backbone and a smaller action expert. The resulting policy can control multiple robot embodiments and can be post-trained for demanding downstream tasks."
 %}
 
 The main network begins with **PaliGemma**, an open-source 3-billion-parameter VLM. Image encoders convert two or three camera observations into embeddings, while the language command is represented as language tokens. The robot's joint state is projected into the same embedding space. These inputs provide the context that the model uses to generate its next action chunk. <d-cite key="black2025pi0"></d-cite>
 
-$\pi_0$ augments the VLM with a separate **300-million-parameter action expert**, producing a model with approximately **3.3 billion parameters** in total. The VLM weights process image and language inputs, while a separate set of weights processes the robot state and continuous action tokens. The paper describes this structure as similar to a two-component mixture of experts: one component preserves the VLM's semantic representations, and the other specializes in robot-specific inputs and outputs. All action tokens can attend bidirectionally to one another, which lets the model coordinate the full action chunk rather than predicting each control independently. <d-cite key="black2025pi0"></d-cite>
+$\pi_0$ augments the VLM with a separate **300-million-parameter action expert**, resulting in a model with about **3.3 billion parameters**. The VLM weights process image and language inputs, while a separate set of weights processes the robot state and continuous action tokens. The paper describes this structure as similar to a two-component mixture of experts: One component preserves the VLM's semantic representations, while the other specializes in robot-specific inputs and outputs. All action tokens can attend bidirectionally to one another, which lets the model coordinate the full action chunk rather than predicting each control independently. <d-cite key="black2025pi0"></d-cite>
 
 This separation is important because language tokens and robot actions have different mathematical structures. Language is discrete and is typically trained with next-token cross-entropy, while robot actions are continuous, high-frequency values that require fine precision. Instead of forcing continuous controls into the VLM's discrete vocabulary, $\pi_0$ retains the semantic backbone but trains the action expert with a continuous flow-matching objective.
 
 ### Generating Actions with Conditional Flow Matching {#pi0-conditional-flow-matching}
 
-Given the current observation $\mathbf{o}_t$ and a demonstrated action chunk $\mathbf{A}_t$, training samples Gaussian noise $\epsilon\sim\mathcal{N}(\mathbf{0},\mathbf{I})$ and a flow timestep $\tau\in[0,1]$. It constructs an intermediate action sample along a linear path between noise and the demonstrated action:
+Given the current observation $o_t$ and a demonstrated action chunk $A_t$, training samples Gaussian noise $\epsilon\sim\mathcal{N}(0,I)$ and a flow timestep $\tau\in[0,1]$. It constructs an intermediate action sample along a linear path between noise and the demonstrated action:
 
 $$
-\mathbf{A}_t^\tau = \tau\mathbf{A}_t + (1-\tau)\epsilon.
+A_t^\tau = \tau{A}_t + (1-\tau)\epsilon.
 $$
 
 When $\tau=0$, the sample is pure noise; when $\tau=1$, it equals the demonstrated action chunk. The action expert learns the **transport velocity** that moves the intermediate sample toward the demonstrated actions. For this path, the target vector field is
 
 $$
-\mathbf{u}(\mathbf{A}_t^\tau \mid \mathbf{A}_t)=\mathbf{A}_t-\epsilon.
+u(A_t^\tau \mid A_t)=A_t-\epsilon.
 $$
 
 The conditional flow-matching loss is
 
 $$
 L^\tau(\theta)=
-\mathbb{E}\left[
+E\left[
 \left\|
-\mathbf{v}_\theta(\mathbf{A}_t^\tau,\mathbf{o}_t)
+v_\theta(A_t^\tau,o_t)
 -
-\mathbf{u}(\mathbf{A}_t^\tau\mid\mathbf{A}_t)
+u(A_t^\tau\mid{A}_t)
 \right\|^2
 \right].
 $$
 
-Here, $\mathbf{v}_\theta$ is the velocity predicted by the action expert and $\mathbf{u}$ is the target direction derived from the demonstration and sampled noise. Minimizing their squared difference teaches the model how a noisy candidate chunk should move at each flow timestep. Importantly, **$\tau$ is generation time, not physical robot time $t$**. <d-cite key="black2025pi0"></d-cite>
+Here, $v_\theta$ is the velocity predicted by the action expert and $u$ is the target direction derived from the demonstration and sampled noise. Minimizing their squared difference teaches the model how a noisy candidate chunk should move at each flow timestep. It is important to note that, **$\tau$ is generation time, not physical robot time $t$**. <d-cite key="black2025pi0"></d-cite>
 
 At inference time, the policy starts with random noise $\mathbf{A}_t^0$ and repeatedly follows the learned vector field using forward Euler integration:
 
 $$
-\mathbf{A}_t^{\tau+\delta}
+A_t^{\tau+\delta}
 =
-\mathbf{A}_t^\tau
+A_t^\tau
 +
-\delta\mathbf{v}_\theta(\mathbf{A}_t^\tau,\mathbf{o}_t).
+\delta{v}_\theta(A_t^\tau,o_t).
 $$
 
 The paper uses **10 integration steps**, with $\delta=0.1$. Each step asks the model how every component of the candidate action chunk should change, multiplies that velocity by the step size, and adds the update to the current chunk. At $\tau=1$, the model returns a complete 50-action sequence. The robot executes only a prefix before generating another chunk from a new observation. The reported systems execute 16 actions at 20 Hz or 25 actions at 50 Hz before inference is run again. <d-cite key="black2025pi0"></d-cite>
@@ -368,7 +367,7 @@ Architecture alone is not enough to make $\pi_0$ a foundation model. The authors
 The paper separates training into two stages:
 
 1. **Pretraining for breadth.** The model is exposed to diverse tasks, scenes, embodiments, behaviors, mistakes, and recovery trajectories. The goal is a broadly capable base policy that can follow language commands and perform many tasks at a basic level.
-2. **Post-training for fluency.** The base model is fine-tuned on carefully curated, task-specific data. This stage teaches consistent and efficient strategies for demanding downstream tasks such as laundry folding, table bussing, and box assembly.
+2. **Post-training for fluency.** The base model is fine-tuned on curated, task-specific data. This stage teaches consistent and efficient strategies for demanding downstream tasks such as laundry folding, table bussing, and box assembly.
 
 This division provides a useful interpretation of data quality. Training only on polished demonstrations may produce a brittle policy because it rarely observes mistakes or recoveries. Training only on broad, lower-quality data may provide coverage but fail to produce efficient execution. The combination allows pretraining to supply behavioral diversity and recovery experience while post-training emphasizes the desired strategy. <d-cite key="black2025pi0"></d-cite>
 
@@ -404,6 +403,8 @@ For the most difficult tasks, the paper compares the complete pretraining-plus-p
 {% include figure.liquid
    path="assets/img/2026-09-23-foundation-models-for-action/pi0-complex-task-montage.png"
    class="img-fluid rounded z-depth-1"
+  width="75%"
+   max-width="75%"
    caption="Figure 9: Examples of the complex multi-stage tasks used for post-training evaluation, including laundry folding, table bussing, box assembly, egg packing, and to-go-box packing."
 %}
 
@@ -446,13 +447,6 @@ Their generative procedures are closely related but not identical. Diffusion Pol
 
 The most important difference is therefore not simply **diffusion versus flow matching**. Diffusion Policy primarily contributes a continuous generative policy representation, while $\pi_0$ embeds a related continuous generator inside a much larger foundation-model training framework. $\pi_0$ adds semantic initialization, language conditioning, cross-embodiment data, model scale, and a pretraining/post-training recipe. Comparing the two as if only their loss functions differed would miss most of what distinguishes them.
 
-### Interpreting the Evidence {#cross-paradigm-interpreting-evidence}
-
-The presentation emphasized that model comparisons should isolate the type of generalization being claimed. A robot policy might generalize to new object instances, new scenes, new language instructions, new tasks, or new embodiments; success on one does not establish success on all of them. Evaluations should therefore state which shift is held out and should report task success together with latency, intervention frequency, and recovery after perturbations.
-
-The evidence also suggests different reasons to choose each approach. With a moderate task-specific dataset and a need for precise multimodal control, Diffusion Policy provides a focused and comparatively compact solution. When the goal requires language-conditioned behavior, reuse across many task families, and transfer from broad robot experience, $\pi_0$ offers a stronger generalist framework, but at substantially greater data and compute cost. Under a fair comparison, the methods should use compatible observations, action spaces, control frequencies, demonstration budgets, and inference budgets.
-
-Overall, the two papers form a progression rather than a strict competition. Diffusion Policy demonstrates why generative action chunks are effective for robot control; $\pi_0$ shows how continuous generative action modeling can become one component of a larger VLA foundation model. Their shared challenge is closed-loop reliability: regardless of how a chunk is generated, the policy must decide how long to trust it, when to observe again, and how to recover when physical execution diverges from the plan.
 ## Presentation Q&A
 
 During the lecture, several technical questions were raised by the presenting team concerning the capabilities and limitations of Vision-Language-Action (VLA) models. Not every question could be fully discussed during the presentation, so the summaries below reflect the points that were actually raised in class.
