@@ -38,20 +38,15 @@ toc:
   - name: "Question and Answer"
 
 ---
-
 ## Introduction
 Autonomous robots operating in unstructured, human-centered environments must do more than recognize objects or understand instructions, they must translate that understanding into **physical actions that succeed in the real world**. Unlike purely perceptual or language-based tasks, robot control is affected by contact dynamics, sensing uncertainty, execution error, and changes in the environment that occur as the robot acts.
 
 A central theme of this lecture is that **generalization must survive physical execution**. Language may identify *what* task should be performed, but a robot policy must still determine *how* to move in a way that is precise, temporally consistent, and responsive to feedback.
 
 Learning general robot policies introduces several challenges:
-
 1. **Multiple Valid Behaviors**: A single task may admit several successful action sequences. For example, a robot may approach an object from different directions or complete subtasks in different orders. A policy therefore needs to represent distributions over possible behaviors rather than only a single deterministic action.
-
 2. **Temporal Dependence**: Robot actions are not independent across time. Once a robot begins following a particular strategy, subsequent controls must remain consistent with that decision while still responding to changes in the environment.
-
 3. **Physical Execution and Feedback**: Predictions must remain useful after they are executed. Contact, control error, or unexpected changes can cause the physical state to differ from what the policy anticipated, making closed-loop observation and replanning important.
-
 4. **Generalization Across Tasks and Environments**: A general-purpose robot should ideally reuse knowledge across different tasks, objects, scenes, and robot embodiments rather than requiring a completely separate policy for every behavior.
 
 To address these challenges, this lecture examines two approaches to learning and generating robot actions:
@@ -308,7 +303,7 @@ where $A_t=[a_t,\ldots,a_{t+H-1}]$ is a chunk of future actions and $o_t=[I_t^1,
 {% include figure.liquid
    path="assets/img/2026-09-23-foundation-models-for-action/pi0_framework.png"
    class="img-fluid rounded z-depth-1"
-   caption="Figure 6: Overview of the $\pi_0$ framework. A broad pretraining mixture is used to train a VLA model composed of a pretrained PaliGemma backbone and a smaller action expert. The resulting policy can control multiple robot embodiments and can be post-trained for demanding downstream tasks."
+   caption="Figure 6: Overview of the $\pi_0$ framework. A broad pretraining mixture is used to train a VLA model composed of a pretrained PaliGemma backbone and a smaller action expert. The resulting policy can control multiple robot embodiments and can be post-trained for demanding downstream tasks. Adapted from Black et al."
 %}
 
 The main network begins with **PaliGemma**, an open-source 3-billion-parameter VLM. Image encoders convert two or three camera observations into embeddings, while the language command is represented as language tokens. The robot's joint state is projected into the same embedding space. These inputs provide the context that the model uses to generate its next action chunk. <d-cite key="black2025pi0"></d-cite>
@@ -381,7 +376,7 @@ The experiments evaluate four main questions: whether the pretrained base model 
 {% include figure.liquid
    path="assets/img/2026-09-23-foundation-models-for-action/pi0-out-of-box-results.png"
    class="img-fluid rounded z-depth-1"
-   caption="Figure 7: Out-of-box evaluation after pretraining. The full pi0 model and its compute-parity version outperform the reported OpenVLA, Octo, and pi0-small baselines across the five evaluated tasks."
+   caption="Figure 7: Out-of-box evaluation after pretraining. The full pi0 model and its compute-parity version outperform the reported OpenVLA, Octo, and pi0-small baselines across the five evaluated tasks. Adapted from Black et al."
 %}
 
 For the **out-of-box evaluation**, the same pretrained policy is prompted to perform five tasks without task-specific post-training. The full model performs best across all tasks, and the version trained for the same number of update steps as the baselines still outperforms OpenVLA, Octo, and $\pi_0$-small. The presentation appropriately added an important caveat: these comparisons do not isolate a single cause. OpenVLA uses autoregressive action tokens, Octo uses diffusion-based chunks, and $\pi_0$ uses flow matching, but the models also differ in scale, initialization, capacity, and training. Therefore, the result supports the complete $\pi_0$ design, not a clean claim that flow matching alone causes the improvement. <d-cite key="black2025pi0"></d-cite>
@@ -405,7 +400,7 @@ For the most difficult tasks, the paper compares the complete pretraining-plus-p
    class="img-fluid rounded z-depth-1"
   width="75%"
    max-width="75%"
-   caption="Figure 9: Examples of the complex multi-stage tasks used for post-training evaluation, including laundry folding, table bussing, box assembly, egg packing, and to-go-box packing."
+   caption="Figure 9: Examples of the complex multi-stage tasks used for post-training evaluation, including laundry folding, table bussing, box assembly, egg packing, and to-go-box packing. Adapted from Black et al."
 %}
 
 The qualitative task montage from the paper would also be valuable here because a normalized score does not fully communicate the physical complexity of the experiments. Folding deformable clothing, bracing cardboard with two arms, grasping fragile eggs, and sorting previously unseen table objects require different forms of dexterity and failure recovery. The presentation's box-building demonstration made this point especially clear: the policy coordinates both arms, uses the table as support, and retries folds when the material does not behave as expected.
